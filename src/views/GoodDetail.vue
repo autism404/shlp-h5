@@ -5,8 +5,8 @@
       <div class="position-left">
         <van-icon name="arrow-left" color="#666666" size="24" />
       </div>
-      <div class="text-fontred text-14 flex-box position-right"><img class="position-top-img mar-r-5"
-          src="../assets/images/common/icon-shareredpacket.png" alt="">分享</div>
+      <div class="text-fontred text-14 flex-box position-right" @click="$refs['sharesheet'].showShare=true"><img
+          class="position-top-img mar-r-5" src="../assets/images/common/icon-shareredpacket.png" alt="">分享</div>
     </section>
     <section>
       <div class=" text-white" style="background: #FF1C34;">
@@ -57,7 +57,7 @@
     </section>
     <section class="bg-white">
       <div class="pad-lr-12">
-        <div class="flex-box space-between height48">
+        <div class="flex-box space-between height48" @click="$refs['goodsku'].show=true">
           <div class="flex-box">
             <div class="text-gray text-14 mar-r-12">已选</div>
             <div class="text-weight">900克，3段</div>
@@ -116,7 +116,8 @@
     </section>
     <section>
       <div class="pad-lr-12 bg-white pad-b-15">
-        <div class="clearfix text-14 pad-t-12 text-weight">商品评价(233) <span class="pull-right text-12 text-gray ">查看全部
+        <div class="clearfix text-14 pad-t-12"><span class="text-weight">商品评价(233)</span><span
+            class="pull-right text-12 text-gray ">查看全部
             <van-icon name="arrow" size="10" /></span></div>
         <div class="mar-t-10">
           <div class="commont-user text-weight-400 text-13"><img class="line-block-vm mar-r-5"
@@ -164,11 +165,8 @@
         <GoodAction></GoodAction>
       </div>
     </section>
-    <section>
-      <good-sku :showDialog="true"></good-sku>
-      <share-sheet :showShare="true"></share-sheet>
-    </section>
-
+    <good-sku ref="goodsku" :showDialog="showDialog" @closeDialog="showDialog=false"></good-sku>
+    <share-sheet ref="sharesheet" :showDialog="showShare" @closeDialog="showShare=false"></share-sheet>
   </div>
 </template>
 <script>
@@ -181,7 +179,8 @@
     components: { Swiper, GoodAction, GoodSku, ShareSheet },
     data() {
       return {
-        showDialog: true,
+        showDialog: false,
+        showShare: false,
         swiperList: [{ img: '../assets/images/common/goods.png' },
         { img: '../assets/images/common/goods.png' }]
       };

@@ -1,7 +1,8 @@
 <template>
-  <div class="GoodSku">
+  <div class="good-sku">
     <van-sku v-model="show" :sku="sku" :goods="goods" :quota="0" :hide-stock="sku.hide_stock"
-      :message-config="messageConfig" @buy-clicked="onBuyClicked" />
+      :message-config="messageConfig" @buy-clicked="onBuyClicked" :show-add-cart-btn="false" :hide-selected-text="true"
+      stepper-title="数量" />
   </div>
 </template>
 <script>
@@ -14,23 +15,26 @@
         sku: {
           tree: [
             {
-              k: '颜色', // skuKeyName：规格类目名称
+              k: '段数', // skuKeyName：规格类目名称
               k_s: 's1', // skuKeyStr：sku 组合列表（下方 list）中当前类目对应的 key 值，value 值会是从属于当前类目的一个规格值 id
               v: [
                 {
                   id: '1', // skuValueId：规格值 id
-                  name: '红色', // skuValueName：规格值名称
-                  imgUrl: 'https://img.yzcdn.cn/1.jpg', // 规格类目图片，只有第一个规格类目可以定义图片
-                  previewImgUrl: 'https://img.yzcdn.cn/1p.jpg' // 用于预览显示的规格类目图片
-                },
-                {
-                  id: '1',
-                  name: '蓝色',
-                  imgUrl: 'https://img.yzcdn.cn/2.jpg',
-                  previewImgUrl: 'https://img.yzcdn.cn/2p.jpg'
+                  name: '3段' // skuValueName：规格值名称
                 }
               ],
-              largeImageMode: true //  是否展示大图模式
+              largeImageMode: false //  是否展示大图模式
+            },
+            {
+              k: '规格', // skuKeyName：规格类目名称
+              k_s: 's2', // skuKeyStr：sku 组合列表（下方 list）中当前类目对应的 key 值，value 值会是从属于当前类目的一个规格值 id
+              v: [
+                {
+                  id: '1', // skuValueId：规格值 id
+                  name: '900克' // skuValueName：规格值名称
+                }
+              ],
+              largeImageMode: false //  是否展示大图模式
             }
           ],
           list: [
@@ -43,21 +47,10 @@
             }
           ],
           price: '1.00', // 默认价格（单位元）
-          stock_num: 227, // 商品总库存
           collection_id: 2261, // 无规格商品 skuId 取 collection_id，否则取所选 sku 组合对应的 id
           none_sku: false, // 是否无规格商品
-          messages: [
-            {
-              // 商品留言
-              datetime: '0', // 留言类型为 time 时，是否含日期。'1' 表示包含
-              multiple: '0', // 留言类型为 text 时，是否多行文本。'1' 表示多行
-              name: '留言', // 留言名称
-              type: 'text', // 留言类型，可选: id_no（身份证）, text, tel, date, time, email
-              required: '1', // 是否必填 '1' 表示必填
-              placeholder: '' // 可选值，占位文本
-            }
-          ],
-          hide_stock: false // 是否隐藏剩余库存
+          messages: [],
+          hide_stock: true // 是否隐藏剩余库存
         },
         goods: {
           picture: 'https://img.yzcdn.cn/1.jpg'
@@ -66,17 +59,6 @@
           // 数据结构见下方文档
         }
       };
-    },
-    props: {
-      showDialog: {
-        type: Boolean,
-        default: false
-      }
-    },
-    watch: {
-      showDialog(show) {
-        this.show = show;
-      }
     },
     computed: {},
     methods: {
@@ -89,5 +71,39 @@
 <style lang="less" scoped>
   @import '../assets/css/theme.less';
 
-  .good-sku {}
+  .good-sku {
+    /deep/.van-popup--bottom.van-popup--round {
+      border-radius: 0;
+    }
+
+    /deep/.van-popup__close-icon--top-right {
+      display: none;
+    }
+
+    /deep/.van-sku-header__img-wrap,
+    /deep/.van-sku-header__goods-info {
+      top: -50px
+    }
+
+    /deep/.van-sku-row__item {
+      border: 1px solid #fff;
+    }
+
+    /deep/.van-sku-header__goods-info {
+      position: relative;
+    }
+
+    /deep/.van-sku-row__item--active {
+      border: 1px solid #FF1C34;
+    }
+
+    /deep/ .van-sku-row__item--active::before {
+      background: #fff;
+    }
+
+    /deep/.van-sku-row__image-item::before,
+    .van-sku-row__item::before {
+      background: #fff;
+    }
+  }
 </style>

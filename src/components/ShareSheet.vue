@@ -1,6 +1,6 @@
 <template>
   <div class="share-sheet">
-    <van-share-sheet v-model="showShare" :options="options" @select="onSelect" :get-container="container" />
+    <van-share-sheet v-model="showShare" :options="options" @select="onSelect" @cancel="onCancel" />
   </div>
 </template>
 <script>
@@ -30,21 +30,13 @@
         ]
       };
     },
-    props: {
-      showDialog: {
-        type: Boolean,
-        default: false
-      }
-    },
-    watch: {
-      showDialog(show) {
-        this.showShare = show;
-      }
-    },
     computed: {},
     methods: {
+      onCancel() {
+        this.$emit('closeDialog');
+      },
       onSelect() {
-
+        this.showDialog = false;
       }
     }
   };
@@ -52,7 +44,28 @@
 <style lang="less" scoped>
   @import '../assets/css/theme.less';
 
-  .good-action {
-    height: 48px;
+  /deep/.van-popup--bottom.van-popup--round {
+    border-radius: 0;
+  }
+
+  /deep/.van-share-sheet__options {
+    padding: 0;
+  }
+
+  /deep/.van-share-sheet__option {
+    width: 93px;
+    height: 84px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  /deep/.van-share-sheet__cancel::before {
+    height: 2px;
+  }
+
+  /deep/.van-share-sheet__icon {
+    width: 32px;
+    height: 32px;
   }
 </style>
