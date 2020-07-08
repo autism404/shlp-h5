@@ -228,7 +228,6 @@
     padding: 3px 4px 5px 4px;
     width: 40px;
     height: 40px;
-    border: 1px dashed #999;
   }
 
   .vip-box {
@@ -322,7 +321,6 @@
   }
 
   .goods .img-dash {
-    border: 1px dashed #999;
     width: 98px;
   }
 
@@ -359,7 +357,6 @@
   }
 
   .tj-goods .img-dash {
-    border: 1px dashed #999;
     width: 170px;
   }
 
