@@ -3,7 +3,7 @@
     <van-goods-action>
       <van-goods-action-icon :icon="iconList[0].img" text="客服" @click="onClickIcon" />
       <van-goods-action-icon :icon="iconList[1].img" text="购物车" @click="onClickIcon" />
-      <van-goods-action-button type="danger" text="立即购买" @click="onClickButton" />
+      <van-goods-action-button color="#FF1C34" text="立即购买" @click="onClickButton" />
     </van-goods-action>
   </div>
 </template>
