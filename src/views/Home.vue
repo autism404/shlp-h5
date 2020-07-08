@@ -96,9 +96,9 @@
       <div class="act-box margin-box bg-white" v-for="(item,indee) in 2" :key="indee">
         <div class="goods-box-header text-center"><img src="../assets/images/common/banner.png" alt=""></div>
         <div class="goods-box ">
-          <div class="goods" v-for="(item,index) in 4" :key="index">
+          <div class="goods width96" v-for="(item,index) in 4" :key="index">
             <p class="img-dash"><img src="../assets/images/common/goods3.png" alt=""></p>
-            <p class="ellipsis text-12">爱他美奶粉黄金1段</p>
+            <p class="text-wrap ellipsis--1 text-12">花王（Merries）纸尿裤 S82片…</p>
             <p><span class="text-14 text-red">￥145.00</span></p>
           </div>
         </div>
@@ -181,7 +181,7 @@
   }
 
   .width96 {
-    width: 96px;
+    width: 98px;
   }
 
   .icon-down {
@@ -266,12 +266,20 @@
     white-space: nowrap;
   }
 
+  .tr-box {
+    border-left: 2px solid #F9F9F9;
+  }
+
   .tr-box-header span img,
   .tl-box-header span img,
   .tb-box-header span img {
     width: 57px;
     height: 20px;
     padding: 0 27px 0 14px;
+  }
+
+  .tb-box-header {
+    border-top: 2px solid #F9F9F9;
   }
 
   .tr-box-footer {
@@ -287,6 +295,7 @@
   .tb-box-header {
     height: 44px;
     line-height: 44px;
+    border-top: 2px solid #F9F9F9;
   }
 
   .morebox {

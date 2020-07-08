@@ -1,15 +1,16 @@
 /*------------------------baseSetting------------------------*/
-@baseFont: #4a4a4a;
+@baseFont: #333333;
 @gray:#999;
 @white:#fff;
 @primaryColor:#00A496;
-@red:#ff0000;
+@red:#FF1C34;
+@fontRed:#F12424;
 @yellow:#fba109;
 @blue:#00C0FF;
 @lightBlue: #f2fafe;
 @green: #4ba34c;
 
-@bgGray: #F9F9F9;
+@bgGray: #F8F8F8;
 
 @borderColor: #d2d2d2;
 
@@ -35,13 +36,18 @@ body{ font-size: 15px;}
 .text-left{ text-align: left !important}
 
 .ellipsis{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;word-wrap:normal}
-.ellipsis--l2{max-height:42px;line-height:21px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.ellipsis--1{overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical;}
+.ellipsis--l2{max-height:34px;line-height:34px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
 .ellipsis--l3{max-height:63px;line-height:21px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical}
-
+.flex1{display: flex;display: -webkit-flex; box-align: center; align-items: center;  -webkit-box-align: center;}
 .flex-box{display: flex; display: -webkit-flex; box-align: center; align-items: center; justify-content: center; -webkit-box-align: center;}
 .flex-box-normal{display: -webkit-box; display: -webkit-flex; display: flex; -webkit-box-align: flex-start; -webkit-align-items: flex-start; align-items: flex-start;}
+.flex-box-col{display: flex; display: -webkit-flex; flex-direction: column; box-align: center; justify-content: space-between; -webkit-box-align: center;}
 .flex-1{ flex: 1;}
 .flex-2{ flex: 2;}
+
+.text-wrap{ word-break: break-all;word-wrap: break-word; word-break:break-all;white-space:pre-wrap;}
+.space-between{justify-content:space-between;};
 
 .pull-left{float:left}
 .pull-right{float:right}
@@ -59,9 +65,11 @@ body{ font-size: 15px;}
 
 .avatar{ display: inline-block; border-radius: 100%; overflow: hidden;}
 .avatar img{ width: 100%; height: 100%;}
+.white-space-no{white-space:normal;}
 
 .icon{ font-size: 16px;}
 .text-10{ font-size: 10px;}
+.text-11{ font-size: 11px;}
 .text-12{ font-size: 12px;}
 .text-13{ font-size: 13px;}
 .text-14{ font-size: 14px;}
@@ -73,19 +81,38 @@ body{ font-size: 15px;}
 .text-24{ font-size: 24px;}
 .text-40{ font-size: 40px;}
 
+
+.mar-t-4{margin-top: 4px;}
+.mar-t-5{margin-top: 5px;}
+.mar-t-9{margin-top: 9px;}
+.mar-t-10{margin-top: 10px;}
 .mar-t-12{margin-top: 12px;}
 .mar-l-12{margin-left: 12px;}
+.mar-l-30{margin-left: 30px;}
+.mar-l-33{margin-left: 33px;}
+.mar-r-4{margin-right: 4px;}
+.mar-r-5{margin-right: 5px;}
 .mar-r-9{margin-right: 9px;}
+.mar-r-10{margin-right: 10px;}
+.mar-r-12{margin-right: 12px;}
 .mar-lr-12{margin: 0 12px;}
+.mar-tb-9{margin: 9px 0;}
+.mar-tb-12{margin: 12px 0;}
+.mar-t-9{margin-top: 9px;}
+.mar-b-9{margin-bottom: 9px;}
+.mar-b-15{margin-bottom: 15px;}
 .mar-b-20{margin-bottom: 20px;}
 
 .mar-r-17{margin-right: 17px;}
 
-
+.pad-12{padding:12px}
+.pad-15{padding:15px}
 .pad-t-12{padding-top:12px;}
 .pad-t-17{padding-top:17px;}
 .pad-lr-12{padding:0 12px;}
+.pad-lr-15{padding:0 15px;}
 .pad-lr-1612{padding:0 12px 0 16px;}
+.pad-b-15{padding-bottom: 15px;}
 
 
 .vertical-align{vertical-align:top;}
