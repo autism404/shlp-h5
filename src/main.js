@@ -5,12 +5,15 @@ import router from './router';
 import store from './store';
 import 'lib-flexible';
 import vant from 'vant';
+import mixins from './mixins/global';
+
 
 import './components';
 
 Vue.config.productionTip = false;
 
 Vue.use(vant);
+Vue.mixin(mixins);
 
 // router.beforeEach((to, from, next) => {
 //   const token = localStorage.getItem('token');

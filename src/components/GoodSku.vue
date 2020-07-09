@@ -60,6 +60,14 @@
         }
       };
     },
+    props: {
+      goodDetail: {
+        type: Object,
+        default: () => {
+          return {};
+        }
+      }
+    },
     computed: {},
     methods: {
       onBuyClicked() {

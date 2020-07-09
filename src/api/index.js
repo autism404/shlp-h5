@@ -4,7 +4,7 @@ const service = axios.create({
   // 设置超时时间
   timeout: 6000,
   baseURL: process.env.VUE_APP_BASE_API,
-  withCredentials: true
+  withCredentials: false
 });
 service.defaults.headers.post['Content-Type'] = 'application/json';
 
@@ -14,12 +14,6 @@ service.defaults.headers.post['Content-Type'] = 'application/json';
  */
 service.interceptors.request.use(config => {
   // 可以在请求先展示加载框
-
-  // 请求头带token
-  const authToken = window.localStorage.getItem('authToken');
-  if (authToken) {
-    config.headers['Authorization'] = `Bearer ${authToken}`;
-  }
   return config;
 }, (error) => {
   return Promise.reject(error);
@@ -30,14 +24,10 @@ service.interceptors.request.use(config => {
  */
 service.interceptors.response.use(response => {
   // 请求响应后关闭加载框
-
   const responseCode = response.status;
   // 如果返回的状态码为200，说明接口请求成功，可以正常拿到数据
   // 否则的话抛出错误
   if (responseCode === 200) {
-    if (response.data.Data && response.data.Data.authToken) {
-      window.localStorage.setItem('authToken', response.data.Data.authToken);
-    }
     return Promise.resolve(response.data);
   } else {
     return Promise.reject(response);
@@ -82,10 +72,10 @@ service.interceptors.response.use(response => {
         });
       }, 1000);
       break;
-      // 404请求不存在
+    // 404请求不存在
     case 404:
       break;
-      // 其他错误，直接抛出错误提示
+    // 其他错误，直接抛出错误提示
     default:
   }
   return Promise.reject(error);

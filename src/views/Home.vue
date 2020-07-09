@@ -14,19 +14,13 @@
           </span>
         </p>
         <p>
-          <van-search v-model="value" shape="round" background="#FF2137" placeholder="请输入搜索关键词" />
+          <van-search v-model="search" shape="round" background="#FF2137" placeholder="请输入搜索关键词" />
         </p>
       </div>
       <div class="text-center bannerbox banner-img">
         <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white" :show-indicators="false">
-          <van-swipe-item>
-            <img class="banner-img" src="../assets/images/common/banner.png" alt="">
-          </van-swipe-item>
-          <van-swipe-item>
-            <img class="banner-img" src="../assets/images/common/banner.png" alt="">
-          </van-swipe-item>
-          <van-swipe-item>
-            <img class="banner-img" src="../assets/images/common/banner.png" alt="">
+          <van-swipe-item v-for="(item,index) in sliderList" :key="index">
+            <img class="banner-img" :src="item.img" alt="">
           </van-swipe-item>
         </van-swipe>
       </div>
@@ -50,7 +44,7 @@
             <p class="tl-box-header flex-box">
               <span class="flex-1"><img src="../assets/images/common/img_xsms.png" alt=""></span>
               <span class="flex-1">
-                <van-count-down :time="time">
+                <van-count-down>
                   <template v-slot="timeData">
                     <span class="block">{{ timeData.hours }}</span>
                     <span class="colon">:</span>
@@ -62,9 +56,9 @@
               </span>
             </p>
             <p>
-              <van-grid :column-num="2" :icon-siz="50">
-                <van-grid-item icon="home-o" badge="￥199" />
-                <van-grid-item icon="search" badge="￥199" />
+              <van-grid :column-num="limitBuy.length" :icon-siz="50">
+                <van-grid-item :icon="base_pic" :badge="`￥{item.limit_buy_price}`" v-for="(item,index) in limitBuy"
+                  :key="index" />
               </van-grid>
             </p>
           </div>
@@ -72,8 +66,8 @@
             <p class="tr-box-header"><span><img src="../assets/images/common/img_ptqg.png" alt=""></span>
             </p>
             <p class="flex-box">
-              <span class="tr-box-footer flex-1"><img src="../assets/images/common/goods.png" alt=""></span>
-              <span class="tr-box-footer flex-1"><img src="../assets/images/common/goods.png" alt=""></span>
+              <span class="tr-box-footer flex-1" v-for="(item,index) in groupBuy" :key="index"><img :src="item.base_pic"
+                  alt=""></span>
             </p>
           </div>
         </div>
@@ -82,24 +76,24 @@
           <span class="text-right text-12 flex-1 pad-lr-12">查看更多</span>
         </div>
         <ul class="morebox flex-box">
-          <li class="morebox-li" v-for="(item,index) in 3" :key="index">
-            <p><img src="../assets/images/common/goods4.png" alt=""></p>
-            <p class="ellipsis morebox-text text-center">爱他美奶粉黄金1段</p>
+          <li class="morebox-li" v-for="(item,index) in hotBuy" :key="index">
+            <p><img :src="item.base_pic" alt=""></p>
+            <p class="ellipsis morebox-text text-center">{{item.item_name}}</p>
             <p class="flex-box text-center">
-              <span class="text-12 text-red flex-1">￥145.00</span>
-              <span class="text-gray text-10 flex-1 textline-through">¥216.00</span></p>
+              <span class="text-12 text-red flex-1">￥{{item.hot_buy_price}}</span>
+              <span class="text-gray text-10 flex-1 textline-through">¥{{item.price}}</span></p>
           </li>
         </ul>
       </div>
     </section>
     <section>
-      <div class="act-box margin-box bg-white" v-for="(item,indee) in 2" :key="indee">
-        <div class="goods-box-header text-center"><img src="../assets/images/common/banner.png" alt=""></div>
+      <div class="act-box margin-box bg-white" v-for="(item,indee) in subjectsList" :key="indee">
+        <div class="goods-box-header text-center"><img :src="item.subjects.img" alt=""></div>
         <div class="goods-box ">
-          <div class="goods width96" v-for="(item,index) in 4" :key="index">
-            <p class="img-dash"><img src="../assets/images/common/goods3.png" alt=""></p>
-            <p class="text-wrap ellipsis--1 text-12">花王（Merries）纸尿裤 S82片…</p>
-            <p><span class="text-14 text-red">￥145.00</span></p>
+          <div class="goods width96" v-for="(it,index) in item.subjects.items" :key="index">
+            <p class="img-dash"><img :src="it.base_pic" alt=""></p>
+            <p class="text-wrap ellipsis--1 text-12">{{it.item_name}}</p>
+            <p><span class="text-14 text-red">￥{{it.price}}</span></p>
           </div>
         </div>
       </div>
@@ -129,6 +123,19 @@
 </template>
 <script>
   export default {
+    computed: {
+      countDown(time) {
+        if (time) {
+          let now = new Date().getTime();
+          return {
+            days: parseInt((time - now) / 86400),
+            hours: parseInt((time - now) / 3600),
+            minutes: parseInt((time - now) / 60),
+            seconds: parseInt((time - now))
+          };
+        } else return {};
+      }
+    },
     data() {
       return {
         iconlist: [
@@ -149,10 +156,87 @@
           { img: require('../assets/images/common/ic_sxy_grey.png'), text: '商学院' },
           { img: require('../assets/images/common/ic_gouwche_grey.png'), text: '购物车' },
           { img: require('../assets/images/common/ic_grzx_grey.png'), text: '我的' }
-        ]
+        ],
+        sliderList: [],
+        limitBuy: [],
+        groupBuy: [],
+        hotBuy: [],
+        subjectsList: [],
+        search: '',
+        active: ''
       };
     },
+    mounted() {
+      this.getSliderList();
+      this.getLimitBuy();
+      this.getGroupBuy();
+      this.getHotBuy();
+      this.getSubjectsList();
+    },
     methods: {
+      async getSliderList() {
+        try {
+          this.$loading();
+          let res = await this.$store.dispatch('postData', {
+            data: {
+              api_name: 'V1.index.index.slider'
+            }
+          });
+          this.sliderList = res;
+          this.$loadingClose();
+        } catch (e) {
+          this.$loadingClose();
+          this.$error(e.message);
+        }
+      },
+      async getLimitBuy() {
+        try {
+          let res = await this.$store.dispatch('postData', {
+            data: {
+              api_name: 'V1.index.Index.seconds'
+            }
+          });
+          this.limitBuy = res;
+        } catch (e) {
+          this.$error(e.message);
+        }
+      },
+      async getGroupBuy() {
+        try {
+          let res = await this.$store.dispatch('postData', {
+            data: {
+              api_name: 'V1.index.Index.groupBuy'
+            }
+          });
+          this.groupBuy = res;
+        } catch (e) {
+          this.$error(e.message);
+        }
+      },
+      async getHotBuy() {
+        try {
+          let res = await this.$store.dispatch('postData', {
+            data: {
+              api_name: 'V1.index.Index.hotBuy'
+            }
+          });
+          this.hotBuy = res;
+        } catch (e) {
+          this.$error(e.message);
+        }
+      },
+      async getSubjectsList() {
+        try {
+          let res = await this.$store.dispatch('postData', {
+            data: {
+              api_name: 'V1.index.Index.items'
+            }
+          });
+          this.subjectsList = res;
+        } catch (e) {
+          this.$error(e.message);
+        }
+      }
     }
   };
 </script>

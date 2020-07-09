@@ -6,41 +6,47 @@ import api from '../api';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
+  state: {
+    base: {
+      token: '1',
+      PHPSESSID: 'if9qbp0rcnp0gdep84pr7e6878',
+      appid: '22222222222222222222222'
+    }
+  },
   modules: {},
   mutations: {
 
   },
   actions: {
-    async postData({
+    async postData ({
       commit,
       rootState
     }, {
-      url,
       data
     }) {
       try {
-        let res = await api.post(url, data);
-        if (res) {
-          if (res.IsSuccess) {
-            if (Array.isArray(res.Data)) {
-              return {
-                List: res.Data,
-                Paging: res.Paging
-              };
-            } else if (typeof res.Data === 'string') {
-              return res.Data;
-            } else if (res.Paging) {
-              return {
-                ...res.Data,
-                Paging: res.Paging
-              };
-            } else {
-              return res.Data;
-            }
-          } else {
-            throw new Error(res.ErrorMsg);
+        data = { ...data, ...this.state.base };
+        let formData = new FormData();
+        for (let key in data) {
+          if (data[key]) {
+            formData.append(key, data[key]);
           }
+        }
+        let res = await api.post('/api', formData);
+        if (res.code === 0) {
+          if (Array.isArray(res.data)) {
+            return res.data; //  没有分页的数据
+          } else if (res.data.total) {
+            return {
+              List: res.data.list,
+              Paging: {
+                Pages: res.data.last_page,
+                TotalCount: res.data.total
+              }
+            };
+          } else return res.data; // 获取全局没有分页的接口 往这里放
+        } else {
+          throw new Error(res.msg);
         }
       } catch (error) {
         throw error;

@@ -165,7 +165,8 @@
         <GoodAction></GoodAction>
       </div>
     </section>
-    <good-sku ref="goodsku" :showDialog="showDialog" @closeDialog="showDialog=false"></good-sku>
+    <good-sku ref="goodsku" :goodDetail="goodDetail" :showDialog="showDialog" @closeDialog="showDialog=false">
+    </good-sku>
     <share-sheet ref="sharesheet" :showDialog="showShare" @closeDialog="showShare=false"></share-sheet>
   </div>
 </template>
@@ -182,14 +183,31 @@
         showDialog: false,
         showShare: false,
         swiperList: [{ img: '../assets/images/common/goods.png' },
-        { img: '../assets/images/common/goods.png' }]
+        { img: '../assets/images/common/goods.png' }],
+        goodDetail: {}
       };
     },
     computed: {},
     created() { },
-    mounted() { },
+    mounted() {
+      this.getGoodDetail();
+    },
     watch: {},
-    methods: {}
+    methods: {
+      async getGoodDetail() {
+        try {
+          let res = await this.$store.dispatch('postData', {
+            data: {
+              api_name: 'V1.index.Index.itemInfo',
+              item_id: 47
+            }
+          });
+          this.goodDetail = res;
+        } catch (e) {
+          this.$error(e.message);
+        }
+      }
+    }
   };
 </script>
 <style lang="less" scoped>
