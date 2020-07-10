@@ -184,22 +184,38 @@
         showShare: false,
         swiperList: [{ img: '../assets/images/common/goods.png' },
         { img: '../assets/images/common/goods.png' }],
-        goodDetail: {}
+        goodDetail: {},
+        time: ''
       };
     },
     computed: {},
     created() { },
     mounted() {
       this.getGoodDetail();
+      // this.Login();
     },
     watch: {},
     methods: {
+      async Login() {
+        try {
+          await this.$store.dispatch('postData', {
+            data: {
+              api_name: 'V1.user.user.login',
+              mobile: '13210107876',
+              login_type: '1',
+              password: 'e10adc3949ba59abbe56e057f20f883e'
+            }
+          });
+        } catch (e) {
+          this.$error(e.message);
+        }
+      },
       async getGoodDetail() {
         try {
           let res = await this.$store.dispatch('postData', {
             data: {
-              api_name: 'V1.index.Index.itemInfo',
-              item_id: 47
+              api_name: 'V1.item.item.itemInfo',
+              item_id: 720393
             }
           });
           this.goodDetail = res;

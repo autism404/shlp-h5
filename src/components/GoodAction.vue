@@ -19,7 +19,10 @@
       };
     },
     computed: {},
-    methods: {}
+    methods: {
+      onClickIcon() { },
+      onClickButton() { }
+    }
   };
 </script>
 <style lang="less" scoped>

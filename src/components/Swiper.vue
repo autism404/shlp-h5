@@ -26,7 +26,9 @@
       }
     },
     computed: {},
-    methods: {}
+    methods: {
+      onChange() { }
+    }
   };
 </script>
 <style lang="less" scoped>
